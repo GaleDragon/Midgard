@@ -43,14 +43,14 @@ class TransportVehicle(object):
     @classmethod    
     def manual_authorization( cls , credential_file_name='credentials.json' ):
         # Copy your credentials from the APIs Console
-        CLIENT_ID = '284247537140-n59453ej2vhfdjphcp1euohsae5g614d.apps.googleusercontent.com'
-        CLIENT_SECRET = 'LcllD_MsEipfX279_uN6ouOe'
+        CLIENT_ID = 'CLIENT ID HERE'
+        CLIENT_SECRET = 'CLIENT SECRET HERE'
 
         # Check https://developers.google.com/drive/scopes for all available scopes
         OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
 
         # Redirect URI for installed apps
-        REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
+        REDIRECT_URI = 'REDIRECT URI'
         
         # Run through the OAuth flow and retrieve credentials
         flow = OAuth2WebServerFlow(CLIENT_ID, CLIENT_SECRET, OAUTH_SCOPE, REDIRECT_URI)
