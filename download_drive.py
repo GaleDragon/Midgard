@@ -37,5 +37,5 @@ if __name__ == '__main__':
     token = str( access.text ).strip( )
     
     TransportVehicle.setToken(token)
-
-    TransportVehicle.download( FILE_ID, GIVEN_NAME )
+    d = Download( GIVEN_NAME, FILE_ID )
+    d.download()

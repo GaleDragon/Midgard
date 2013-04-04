@@ -38,5 +38,5 @@ if __name__ == '__main__':
     token = str( access.text ).strip( )
     
     TransportVehicle.setToken(token)
-
-    fileID = TransportVehicle.upload( FILE_PATH, GIVEN_NAME )
+    u = Upload( FILE_PATH, GIVEN_NAME )
+    fileID = u.upload()
