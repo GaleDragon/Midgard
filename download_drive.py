@@ -28,13 +28,23 @@ class Download(object):
 
 
 if __name__ == '__main__':
-    FILE_ID = sys.args[1]
-    GIVEN_NAME = sys.args[2]
-    JSESSIONID = sys.args[3]
+    # Add argparse here
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--jsession_id', metavar="ID", default=None, help="The JSession ID that will be used to attempt to authenticate.")
+    parser.add_argument('file_path')
+    parser.add_argument('given_name')
+    args = parser.parse_args()
     
-    cookie = dict(JSESSIONID=JSESSIONID)
-    access = requests.get('https://myglims.appspot.com/token', cookies=cookie)
-    token = str( access.text ).strip( )
+    FILE_ID = sys.argv[1]
+    GIVEN_NAME = sys.argv[2]
+    token = None
+    if args.jsession_id:
+        JSESSIONID = args.jsession_id
+        cookie = dict(JSESSIONID=JSESSIONID)
+        access = requests.get('https://myglims.appspot.com/token', cookies=cookie)
+        token = str( access.text ).strip( )
+    
     
     TransportVehicle.setToken(token)
     d = Download( GIVEN_NAME, FILE_ID )

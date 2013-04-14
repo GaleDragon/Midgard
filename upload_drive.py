@@ -17,10 +17,9 @@ class Upload(object):
             'description': 'A test document',
             'mimeType': 'text/plain'
         }
-        
         try:
             file = drive_service.files().insert(body=body, media_body=media_body).execute()
-        except AccessTokenCredentialsError as a:
+        except Exception as a:
             print "Upload try:", a
             creds = TransportVehicle.manual_authorization()
             drive_service = TransportVehicle.build_drive_service(credentials=creds)
@@ -29,14 +28,22 @@ class Upload(object):
         return file['id']
         
 if __name__ == '__main__':
-    FILE_PATH = sys.args[1]
-    GIVEN_NAME = sys.args[2]
-    JSESSIONID = sys.args[3]
-    
-    cookie = dict(JSESSIONID=JSESSIONID)
-    access = requests.get('https://myglims.appspot.com/token', cookies=cookie)
-    token = str( access.text ).strip( )
-    
-    TransportVehicle.setToken(token)
+    # Add argparse here
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--jsession_id', metavar="ID", default=None, 
+						help="The JSession ID that will be used to attempt to authenticate.")
+    parser.add_argument('file_path')
+    parser.add_argument('given_name')
+    args = parser.parse_args()
+    FILE_PATH = args.file_path
+    GIVEN_NAME = args.given_name
+    token = None
+    if args.jsession_id:
+        JSESSIONID = args.jsession_id
+        cookie = dict(JSESSIONID=JSESSIONID)
+        access = requests.get('https://myglims.appspot.com/token', cookies=cookie)
+        token = str( access.text ).strip( )
+    t = TransportVehicle(token)
     u = Upload( FILE_PATH, GIVEN_NAME )
     fileID = u.upload()

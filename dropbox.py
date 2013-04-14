@@ -37,11 +37,11 @@ def authorize():
 if __name__ == '__main__':
     authorized_client = authorize()
     
-    #f = open('upload.txt')
-    #response = authorized_client.put_file('/transit.txt', f)
+    f = open('upload.txt')
+    response = authorized_client.put_file('/transit.txt', f)
     
-    #f, metadata = authorized_client.get_file_and_metadata('/transit.txt')
-    #out = open('download.txt', 'w')
-    #out.write(f.read())
-    #out.close()
-    #print(metadata)
+    f, metadata = authorized_client.get_file_and_metadata('/transit.txt')
+    out = open('download.txt', 'w')
+    out.write(f.read())
+    out.close()
+    print(metadata)
